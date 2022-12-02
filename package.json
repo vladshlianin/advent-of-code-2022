@@ -7,20 +7,20 @@
     "lint": "eslint src",
     "test": "jest",
     "prepare": "husky install",
-    "day1": "ts-node ./src/01/index.ts"
+    "day1": "ts-node ./src/01/index.ts",
+    "day2": "ts-node ./src/02/index.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vladshlianin/advent-of-code-2022.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/vladshlianin/advent-of-code-2022/issues"
   },
   "homepage": "https://github.com/vladshlianin/advent-of-code-2022#readme",
   "devDependencies": {
-    "@tsconfig/node16": "^1.0.3",
     "@types/jest": "^29.2.3",
     "@types/node": "^18.11.10",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
