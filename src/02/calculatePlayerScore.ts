@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { ElfShape, PlayerShape, MatchScore, ResultShape, ShapeScore, WinningMap, LosingMap, DrapMap } from './types';
+import { ElfShape, PlayerShape, MatchScore, StragegyMap, ShapeScore, WinningMap, LosingMap, DrapMap } from './types';
 
 const getScorePart1 = (elfShape: ElfShape, playerShape: PlayerShape): number => {
     // Player is guaranteed to have a score depending on chosen figure
@@ -15,12 +15,12 @@ const getScorePart1 = (elfShape: ElfShape, playerShape: PlayerShape): number => 
     return figureResult;
 };
 
-const getScorePart2 = (elfShape: ElfShape, resultShape: keyof typeof ResultShape): number => {
+const getScorePart2 = (elfShape: ElfShape, resultShape: PlayerShape): number => {
     // Player is guaranteed to have a score depending on chosen result
     // However, score consists of result score and chosen figure
     // Which is calculated depending on result.
     // When winning - we pick result respective map
-    const resultValue = ResultShape[resultShape];
+    const resultValue = StragegyMap[resultShape];
     let map = LosingMap;
     if (resultValue === MatchScore.DRAW.valueOf()) {
         map = DrapMap;
@@ -40,7 +40,7 @@ export const calculatePlayerScore = (inputPath: string, type: 1 | 2): number => 
             return acc + getScorePart1(elfShape as ElfShape, playerShape as PlayerShape);
         }
         if (type === 2) {
-            return acc + getScorePart2(elfShape as ElfShape, playerShape as keyof typeof ResultShape);
+            return acc + getScorePart2(elfShape as ElfShape, playerShape as PlayerShape);
         }
         return acc;
     }, 0);
