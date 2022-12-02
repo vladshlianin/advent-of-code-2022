@@ -16,16 +16,16 @@ export enum MatchScore {
     WIN = 6,
 }
 
-export enum ResultShape {
-    'X' = 0,
-    'Y' = 3,
-    'Z' = 6,
-}
-
 export const ShapeScore: Record<PlayerShape, number> = {
     X: 1,
     Y: 2,
     Z: 3,
+};
+
+export const StragegyMap: Record<PlayerShape, MatchScore> = {
+    [PlayerShape.ROCK]: MatchScore.LOSE,
+    [PlayerShape.PAPER]: MatchScore.DRAW,
+    [PlayerShape.SCISSORS]: MatchScore.WIN,
 };
 
 export const DrapMap: Record<ElfShape, PlayerShape> = {
