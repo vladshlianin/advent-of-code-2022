@@ -1,5 +1,3 @@
-// import { parseInput } from '../lib/parseInput';
-
 import { parseInput } from '../lib/parseInput';
 
 // a-z letters have value in range [1,26]
@@ -19,6 +17,11 @@ const splitString = (input: string): Array<string> => {
     return [input.slice(0, middle), input.slice(middle, stringLength)];
 };
 
+const getCharValue = (char: string): number => {
+    const charCode = char.charCodeAt(0);
+    return charCode < LOWER_CASE_BASE ? charCode - UPPER_CASE_BASE : charCode - LOWER_CASE_BASE;
+};
+
 export const calculatePriorityPart1 = (inputPath: string): number => {
     const input = parseInput(inputPath);
     return input.split('\n').reduce<number>((acc, value) => {
@@ -26,9 +29,7 @@ export const calculatePriorityPart1 = (inputPath: string): number => {
         // Only 1 char is overlapping
         for (const char of leftSection) {
             if (rightSection.includes(char)) {
-                const charCode = char.charCodeAt(0);
-                const charValue = char === char.toUpperCase() ? charCode - UPPER_CASE_BASE : charCode - LOWER_CASE_BASE;
-                return acc + charValue;
+                return acc + getCharValue(char);
             }
         }
         return acc;
@@ -39,16 +40,13 @@ export const calculatePriorityPart2 = (inputPath: string): number => {
     // Split every 3 rows by regex. Add \n to include the last one
     const input = parseInput(inputPath) + '\n';
     const matches = input.match(/(.*?\n){3}/gm);
-    if (matches?.length) {
+    if (matches) {
         return matches.reduce<number>((acc, value) => {
             const [firstGroup, secondGroup, thirdGroup] = value.split('\n');
             // Still only 1 char is overlapping
             for (const char of firstGroup) {
                 if (secondGroup.includes(char) && thirdGroup.includes(char)) {
-                    const charCode = char.charCodeAt(0);
-                    const charValue =
-                        char === char.toUpperCase() ? charCode - UPPER_CASE_BASE : charCode - LOWER_CASE_BASE;
-                    return acc + charValue;
+                    return acc + getCharValue(char);
                 }
             }
             return acc;
