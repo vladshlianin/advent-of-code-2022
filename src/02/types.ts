@@ -28,7 +28,7 @@ export const StragegyMap: Record<PlayerShape, MatchScore> = {
     [PlayerShape.SCISSORS]: MatchScore.WIN,
 };
 
-export const DrapMap: Record<ElfShape, PlayerShape> = {
+export const DrawMap: Record<ElfShape, PlayerShape> = {
     [ElfShape.ROCK]: PlayerShape.ROCK,
     [ElfShape.PAPER]: PlayerShape.PAPER,
     [ElfShape.SCISSORS]: PlayerShape.SCISSORS,
