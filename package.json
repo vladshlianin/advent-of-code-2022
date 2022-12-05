@@ -10,7 +10,8 @@
     "day1": "ts-node ./src/01/index.ts",
     "day2": "ts-node ./src/02/index.ts",
     "day3": "ts-node ./src/03/index.ts",
-    "day4": "ts-node ./src/04/index.ts"
+    "day4": "ts-node ./src/04/index.ts",
+    "day5": "ts-node ./src/05/index.ts --inspect=4000"
   },
   "repository": {
     "type": "git",
