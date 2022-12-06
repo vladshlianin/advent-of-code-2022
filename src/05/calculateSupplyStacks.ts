@@ -34,7 +34,7 @@ const parseStackStructure = (input: string): Stack => {
 const executeMovingCommands = (stack: Stack, operations: string, sameOrder: boolean): Stack => {
     // Create a deep copy
     const copy = Object.entries(stack).reduce<Stack>((acc, [key, value]) => {
-        acc[key] = value;
+        acc[key] = [...value];
         return acc;
     }, {});
     return operations.split('\n').reduce<Stack>((acc, value) => {
