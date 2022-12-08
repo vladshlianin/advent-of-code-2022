@@ -13,7 +13,8 @@
     "day4": "ts-node ./src/04/index.ts",
     "day5": "ts-node ./src/05/index.ts",
     "day6": "ts-node ./src/06/index.ts",
-    "day7": "ts-node ./src/07/index.ts"
+    "day7": "ts-node ./src/07/index.ts",
+    "day8": "ts-node ./src/08/index.ts"
   },
   "repository": {
     "type": "git",
