@@ -53,6 +53,7 @@ export const calculateScenicScore = (inputPath: string): number => {
     const input = parseInput(inputPath).split('\n');
     const [columns, rows] = getRowsAndColumns(input);
     let max = 0;
+    // Ignore perimeter trees, since their score would always be 0
     for (let i = 1; i <= rows.length - 2; i++) {
         const rowTrees = rows[i];
         for (let j = 1; j <= rowTrees.length - 2; j++) {
