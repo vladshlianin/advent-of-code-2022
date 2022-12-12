@@ -2,32 +2,17 @@ import { parseInput } from '../lib/parseInput';
 
 type Operation = (input: number) => number;
 
-class Monkey {
-    items: Array<number> = [];
-    inspectedItems = 0;
-    operation;
-    divisibleBy;
-    throwToTrue;
-    throwToFalse;
-    constructor(
-        items: Array<number>,
-        operation: Operation,
-        divisibleBy: number,
-        throwToTrue: number,
-        throwToFalse: number,
-    ) {
-        this.items = items;
-        this.operation = operation;
-        this.divisibleBy = divisibleBy;
-        this.throwToTrue = throwToTrue;
-        this.throwToFalse = throwToFalse;
-    }
-}
+type Monkey = {
+    items: Array<number>;
+    operation: Operation;
+    divisibleBy: number;
+    throwToTrue: number;
+    throwToFalse: number;
+    inspectedItems: number;
+};
 
 const parseOperation = (input: string): Operation => {
-    if (input.includes('old * old')) {
-        return (input: number) => input * input;
-    }
+    if (input.includes('old * old')) return (input: number) => input * input;
     const rawOperand = input.match(/\d+/);
     if (!rawOperand) {
         throw new Error('invalid operation');
@@ -50,7 +35,7 @@ const parseMonkeys = (input: Array<string>): Array<Monkey> => {
         const divisibleBy = parseInt(input[i + 3].replace('Test: divisible by ', ''), 10);
         const throwToTrue = parseInt(input[i + 4].replace('If true: throw to monkey ', ''), 10);
         const throwToFalse = parseInt(input[i + 5].replace('If false: throw to monkey ', ''), 10);
-        result.push(new Monkey(parsedItems, operation, divisibleBy, throwToTrue, throwToFalse));
+        result.push({ items: parsedItems, operation, divisibleBy, throwToTrue, throwToFalse, inspectedItems: 0 });
     }
     return result;
 };
@@ -63,7 +48,6 @@ export const calculateMonkeyBusiness = (inputPath: string, part: 1 | 2): number 
     for (let i = 0; i < (part === 1 ? 20 : 10000); i++) {
         for (let j = 0; j < monkeys.length; j++) {
             const monkey = monkeys[j];
-            // console.log('monkey', monkey);
             if (monkey && monkey.items.length) {
                 monkey.items.forEach((currentItemRaw) => {
                     const currentItem = currentItemRaw;
