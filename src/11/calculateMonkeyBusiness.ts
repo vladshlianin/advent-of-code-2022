@@ -55,13 +55,11 @@ const parseMonkeys = (input: Array<string>): Array<Monkey> => {
     return result;
 };
 
+// Get Least Common Multiple for all the monkeys and use it for handling large numberd
 export const calculateMonkeyBusiness = (inputPath: string, part: 1 | 2): number => {
     const input = parseInput(inputPath).split('\n');
     const monkeys = parseMonkeys(input);
-    // const LCP = 96577;
-    const LCP = monkeys.reduce((a, b) => a * b.divisibleBy, 1);
-    console.log('monkeys', monkeys);
-    // console.log(mod);
+    const LCM = monkeys.reduce((a, b) => a * b.divisibleBy, 1);
     for (let i = 0; i < (part === 1 ? 20 : 10000); i++) {
         for (let j = 0; j < monkeys.length; j++) {
             const monkey = monkeys[j];
@@ -71,7 +69,7 @@ export const calculateMonkeyBusiness = (inputPath: string, part: 1 | 2): number 
                     const currentItem = currentItemRaw;
                     const worryLevel = Math.floor(monkey.operation(currentItem as number) / (part === 1 ? 3 : 1));
                     const monkeyId = worryLevel % monkey.divisibleBy === 0 ? monkey.throwToTrue : monkey.throwToFalse;
-                    monkeys[monkeyId].items.push(worryLevel % LCP);
+                    monkeys[monkeyId].items.push(worryLevel % LCM);
                     monkey.inspectedItems++;
                 });
                 monkey.items = [];

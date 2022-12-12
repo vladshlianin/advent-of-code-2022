@@ -2,7 +2,6 @@ import path from 'path';
 import { calculateMonkeyBusiness } from '../../src/11/calculateMonkeyBusiness';
 
 const INPUT_PATH = path.join(__dirname, 'input.txt');
-// const INPUT_PATH2 = path.join(__dirname, 'input2.txt');
 
 describe('testing day 11', () => {
     test('Correctly computing valid input for part 1', () => {
