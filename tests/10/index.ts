@@ -9,8 +9,4 @@ describe('testing day 10', () => {
         const result = calculateSignalStrength(INPUT_PATH);
         expect(result).toBe(13140);
     });
-    // test('Correctly computing valid input for part 2', () => {
-        // const result = calculateRopePositions(INPUT_PATH2, 10);
-        // expect(result).toBe(36);
-    // });
 });
