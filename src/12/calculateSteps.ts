@@ -60,6 +60,7 @@ const getNeighbours = (x: number, y: number, map: CoordinateMap): Map<Coordinate
 };
 
 // Implement Dijkstra alrogithm
+// Was totally expecting calculating points height in round 2
 const getShortestDistance = (
     start: Coordinate,
     input: CoordinateMap,
@@ -90,7 +91,6 @@ const getShortestDistance = (
         }
 
         if (destination && current.x === destination.x && current.y === destination.y) {
-            console.log('found');
             break;
         }
 
@@ -123,7 +123,6 @@ export const calculateStepsPart2 = (inputPath: string): number => {
     const { possibleStarts, end, map } = getMap(input, 2);
     // Get distances for all nodes from start to end
     const dist = getShortestDistance(end, map);
-    console.log(dist);
     const destData = [...dist.keys()]
         .filter((key) => {
             return possibleStarts.some((ps) => key.x === ps.x && key.y === ps.y);
