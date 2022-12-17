@@ -5,8 +5,8 @@
     "version": "0.2.0",
     "configurations": [
     {
-        "command": "npm run day15",
-        "name": "Run npm day15",
+        "command": "npm run day16",
+        "name": "Run npm day16",
         "request": "launch",
         "type": "node-terminal"
     }

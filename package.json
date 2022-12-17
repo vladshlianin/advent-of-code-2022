@@ -21,7 +21,8 @@
     "day12": "ts-node ./src/12/index.ts",
     "day13": "ts-node ./src/13/index.ts",
     "day14": "ts-node ./src/14/index.ts",
-    "day15": "ts-node ./src/15/index.ts"
+    "day15": "ts-node ./src/15/index.ts",
+    "day16": "ts-node ./src/16/index.ts"
   },
   "repository": {
     "type": "git",
