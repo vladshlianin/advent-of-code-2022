@@ -10,6 +10,11 @@ type Valves = Map<string, Valve>;
 
 type Dist = Map<string, Map<string, number>>;
 
+type ComputedSubset = {
+    set: Array<string>;
+    result: number;
+};
+
 const NumberRegEx = /\d+/;
 
 const parseValves = (input: Array<string>): Map<string, Valve> => {
@@ -72,15 +77,22 @@ const filterEmpty = (valves: Valves) => {
     return result;
 };
 
+const findAllSubsets = (arr: Array<string> = []) => {
+    return arr.reduce<Array<Array<string>>>((combos, item) => {
+        const newCombos = combos.map((combo) => [...combo, item]);
+        combos.push([item], ...newCombos);
+        return combos;
+    }, []);
+};
+
 // Recursively get score for every valve
 const getScore = (
-    time: number,
     currentItem: Valve,
-    opened: Set<string>,
     nonEmpty: Valves,
     dist: Dist,
     maxTime: number,
-    order: Array<Valve> = [],
+    time = 0,
+    opened: Set<string> = new Set(),
 ) => {
     let maxPressure = 0;
     for (const key of nonEmpty.keys()) {
@@ -91,15 +103,13 @@ const getScore = (
         const nextPressure = (maxTime - nextTime) * nextValve.rate;
         const openedCopy = new Set(opened);
         openedCopy.add(key);
-        const nextScore = nextPressure + getScore(nextTime, nextValve, openedCopy, nonEmpty, dist, maxTime, order);
-        if (nextScore > maxPressure) {
-            order.push(nextValve);
-        }
+        const nextScore = nextPressure + getScore(nextValve, nonEmpty, dist, maxTime, nextTime, openedCopy);
         maxPressure = Math.max(maxPressure, nextScore);
     }
     return maxPressure;
 };
 
+// Part 1
 export const calculatePressure = (inputPath: string): number => {
     const input = parseInput(inputPath).split('\n');
     const parsedValves = parseValves(input);
@@ -107,6 +117,43 @@ export const calculatePressure = (inputPath: string): number => {
     const nonEmpty = filterEmpty(parsedValves);
     // Always starting with AA
     const currentValve = parsedValves.get('AA') as Valve;
-    const result1 = getScore(0, currentValve, new Set(), nonEmpty, dist, 30);
-    return result1;
+    return getScore(currentValve, nonEmpty, dist, 30);
+};
+
+// Part 2
+export const calculateCombinedPressure = (inputPath: string) => {
+    const input = parseInput(inputPath).split('\n');
+    const parsedValves = parseValves(input);
+    const dist = floydWarshall(parsedValves);
+    const nonEmpty = filterEmpty(parsedValves);
+    const currentValve = parsedValves.get('AA') as Valve;
+
+    // Get all possible subsets, which are exactly half of non empty pipes
+    const subsetMinSize = Math.floor(nonEmpty.size / 2);
+    const subsets = findAllSubsets([...nonEmpty.keys()]).filter((item) => item.length === subsetMinSize);
+
+    // And calculate how much pressure each of subsets would release and sort them by descent
+    const calculated = subsets
+        .reduce<Array<ComputedSubset>>((acc, set) => {
+            const map = new Map();
+            set.forEach((item) => map.set(item, nonEmpty.get(item)));
+            acc.push({
+                set,
+                result: getScore(currentValve, map, dist, 26),
+            });
+            return acc;
+        }, [])
+        .sort((a, b) => b.result - a.result);
+
+    let result = 0;
+    // Then pick each subset and find another subset, which is not overlapping with it
+    for (let i = 0; i < calculated.length; i++) {
+        const firstSet = calculated[i];
+        const parallelSet = calculated.find((set) => {
+            return set.set.every((secondSetItem) => !firstSet.set.includes(secondSetItem));
+        });
+        const sum = firstSet.result + (parallelSet?.result ?? 0);
+        if (sum > result) result = sum;
+    }
+    return result;
 };
