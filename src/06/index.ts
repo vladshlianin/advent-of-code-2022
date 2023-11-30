@@ -1,5 +1,5 @@
 import path from 'path';
-import { parseInput } from '../lib/parseInput';
+import { parseInput } from 'lib/parseInput';
 import { calculateUnique } from './calculateUnique';
 
 const INPUT_PATH = path.join(__dirname, 'input.txt');
